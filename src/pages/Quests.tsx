@@ -9,35 +9,9 @@ import { Toaster } from "@/components/ui/toaster";
 import Cards, { CardData } from "@/components/cards";
 import { CPlain, PythonPlain, JavaPlain } from "devicons-react";
 import { useNavigate } from "react-router";
-import { useStore } from "@/lib/store";
-
-const data: CardData[] = [
-  {
-    id: 1,
-    image: CPlain,
-    title: "C/C++",
-    progress: 0,
-    description: "Learn C/C++. Advanced course for experienced programmers",
-    is_done: false,
-  },
-  {
-    id: 2,
-    image: PythonPlain,
-    title: "Python",
-    progress: 0.5,
-    description: "Learn Python basics. A good start for beginners",
-    is_done: false,
-  },
-  {
-    id: 3,
-    image: JavaPlain,
-    title: "Java",
-    progress: 1,
-    description:
-      "Get started with Java and Spring Boot. You will learn how to build a REST API",
-    is_done: true,
-  },
-];
+import { backend, useStore } from "@/lib/store";
+import { useEffect, useState } from "react";
+import { convertJsonToCardData } from "@/services/moocs.api";
 
 const badges: string[] = [
   "https://assets.tryhackme.com/img/badges/king.svg",
@@ -48,6 +22,16 @@ const badges: string[] = [
 ];
 
 export default function Quests() {
+  let [data, setData] = useState<CardData[]>([]);
+
+  useEffect(() => {
+    backend.get("/moocs/all").then((response) => {
+      setData(convertJsonToCardData(response.data));
+
+      console.log("Response: ", response);
+    });
+  });
+
   let store = useStore();
   let navigate = useNavigate();
 
@@ -86,16 +70,19 @@ export default function Quests() {
             </svg>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">$45,231.89</div>
+            <div className="text-2xl font-bold">
+              {data.filter((d) => d.progress > 0 && d.progress < 100).length}
+            </div>
             <p className="text-xs text-muted-foreground">
-              +20.1% from last month
+              + {data.filter((d) => d.progress > 0 && d.progress < 100).length}{" "}
+              from last week
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row justify-between items-center pb-2 space-y-0">
             <CardTitle className="text-sm font-medium">
-              Challenges restant
+              Remaining quests
             </CardTitle>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -113,9 +100,11 @@ export default function Quests() {
             </svg>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">+2350</div>
+            <div className="text-2xl font-bold">
+              {data.filter((d) => d.progress != 100).length}
+            </div>
             <p className="text-xs text-muted-foreground">
-              +180.1% from last month
+              + {data.filter((d) => d.progress != 100).length} from last week
             </p>
           </CardContent>
         </Card>

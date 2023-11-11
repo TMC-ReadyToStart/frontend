@@ -8,7 +8,6 @@ export interface CardData {
   title: string;
   progress: number;
   description: string;
-  is_done: boolean;
 }
 
 export interface CardsProps {
@@ -29,15 +28,17 @@ const Cards: React.FC<CardsProps> = ({ data, handleClick }) => {
       <div className="flex gap-4 lg:grid-cols-4">
         {data.map((item, index) => {
           let ImageItem = item.image;
+
+          console.log("PROGRESS: ", item.progress);
           return (
             <Card
               className={`cursor-pointer w-[300px] overflow-auto-scroll hover:opacity-80 ${
-                item.is_done ? "relative completed-card" : ""
+                item.progress === 100 ? "relative completed-card" : ""
               }`}
               key={index}
               onClick={() => handleClick(item.id)}
             >
-              {item.is_done && (
+              {item.progress === 100 && (
                 <div className="absolute top-1/2 left-1/2 p-4 w-full h-full text-lg font-bold text-white bg-green-200 bg-opacity-80 rounded transform -translate-x-1/2 -translate-y-1/2">
                   <span className="flex justify-center items-center w-full h-full text-lg font-bold text-green-500 text-[40px]">
                     COMPLETED
@@ -56,14 +57,14 @@ const Cards: React.FC<CardsProps> = ({ data, handleClick }) => {
               <CardContent className="p-4 pt-2">
                 <div className="flex flex-col justify-center items-center text-center">
                   <div className="flex justify-center items-center w-full">
-                    {item.progress === 1 && (
+                    {item.progress === 100 && (
                       <Badge className="bg-green-500 cursor-pointer select-none hover:bg-green-400">
                         Completed
                       </Badge>
                     )}
-                    {item.progress < 1 && item.progress > 0 && (
+                    {item.progress < 100 && item.progress > 0 && (
                       <Badge className="bg-yellow-500 cursor-pointer select-none hover:bg-yellow-400">
-                        {item.progress * 100}% completed
+                        {item.progress}% completed
                       </Badge>
                     )}
                     {item.progress === 0 && (

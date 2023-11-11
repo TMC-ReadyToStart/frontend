@@ -50,7 +50,7 @@ const Quest = () => {
     <div className="flex-1 p-8 pt-6 space-y-4 min-h-screen bg-slate-100">
       <div className="flex justify-between items-center space-y-2">
         <h2 className="text-3xl font-bold tracking-tight">
-          {store.questTitle} Quest 🤠
+          Quest : {store.questTitle} 🤠
         </h2>
         <div className="flex items-center space-x-2"></div>
       </div>

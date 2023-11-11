@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import axios from "axios";
 
 type QuestionType = "mcq" | "question" | "fill-in-the-blanks";
 
@@ -10,6 +11,13 @@ type Question = {
   text?: string;
   blanks?: string[];
 };
+
+export const backend = axios.create({
+  baseURL: "https://1c65-163-5-23-68.ngrok-free.app/",
+  headers: {
+    "ngrok-skip-browser-warning": "69420",
+  },
+});
 
 interface Store {
   questions: Question[];
