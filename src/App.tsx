@@ -7,8 +7,24 @@ import { UserNav } from "./components/user-nav";
 import Quest from "./pages/Quest";
 import Exam from "@/pages/Exam";
 import Result from "@/pages/Result";
+import { useStore } from "@/lib/store";
+import { useEffect } from "react";
 
 function UI() {
+    const store = useStore();
+
+    useEffect(() => {
+        if (
+            store.questions.length !== 0 ||
+            store.currentQuestion !== 0 ||
+            store.validAnswers !== 0
+        ) {
+            store.setCurrentQuestion(0);
+            store.setValidAnswers(0);
+            store.setQuestions([]);
+        }
+    }, [store]);
+
     return (
         <div className="flex flex-col">
             <div className="w-full h-[56px] flex justify-between px-4 items-center border border-slate-200 border-t-0">

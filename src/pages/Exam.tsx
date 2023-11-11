@@ -64,7 +64,7 @@ function MCQ() {
     const questions = store.questions;
     const idx = store.currentQuestion;
 
-    const [answers, setAnswers] = useState([""]);
+    const [answers, setAnswers] = useState<string[]>([]);
 
     return (
         <Card className="w-1/2">
@@ -79,10 +79,19 @@ function MCQ() {
                 {questions[idx].options?.map((option, i) => (
                     <div className="flex space-x-2" key={i}>
                         <Checkbox
-                            onCheckedChange={() => {
+                            onCheckedChange={(checked) => {
                                 const newAnswers = [...answers];
-                                newAnswers[i] = option;
+                                if (checked) {
+                                    newAnswers.push(option);
+                                } else {
+                                    newAnswers.splice(
+                                        newAnswers.indexOf(option),
+                                        1
+                                    );
+                                }
                                 setAnswers(newAnswers);
+                                console.log(newAnswers);
+                                console.log(questions[idx].answer?.split(","));
                             }}
                         />
                         <label htmlFor={`checkbox-${i}`} className="text-sm">
@@ -97,15 +106,19 @@ function MCQ() {
                             store.setCurrentQuestion(store.currentQuestion + 1);
                             const ca = questions[idx].answer || "";
                             const ca_array = ca.split(",");
-                            const ans_array = answers.filter((a) => a !== "");
-                            let correct = 0;
-                            for (let i = 0; i < ans_array.length; i++) {
-                                if (ca_array.includes(ans_array[i])) {
-                                    correct++;
+
+                            if (ca_array.length === answers.length) {
+                                let correct = true;
+                                for (let i = 0; i < ca_array.length; i++) {
+                                    if (answers.indexOf(ca_array[i]) === -1) {
+                                        correct = false;
+                                    }
                                 }
-                            }
-                            if (correct === ca_array.length) {
-                                store.setValidAnswers(store.validAnswers + 1);
+                                if (correct) {
+                                    store.setValidAnswers(
+                                        store.validAnswers + 1
+                                    );
+                                }
                             }
                         }}
                     >

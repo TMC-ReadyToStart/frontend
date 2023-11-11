@@ -1,3 +1,4 @@
+import { useStore } from "@/lib/store";
 import { BookIcon, LayoutDashboardIcon, LogOut, User2 } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
