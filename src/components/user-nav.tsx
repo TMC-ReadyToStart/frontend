@@ -20,7 +20,7 @@ export function UserNav() {
                     className="relative w-8 h-8 rounded-full"
                 >
                     <Avatar className="w-8 h-8 border-2">
-                        <AvatarImage src="/avatars/01.png" alt="@shadcn" />
+                        {/* <AvatarImage src="/avatars/01.png" alt="@shadcn" /> */}
                         <AvatarFallback>me</AvatarFallback>
                     </Avatar>
                 </Button>

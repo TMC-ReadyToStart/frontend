@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/card";
 import { Overview } from "@/components/overview";
 import { RecentSales } from "@/components/recent-sales";
+import { DataTable } from "@/components/data-table";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function Dashboard() {
     return (
@@ -186,32 +188,22 @@ export default function Dashboard() {
                                     <RecentSales />
                                 </CardContent>
                             </Card>
-                            <Card className="col-span-7 lg:col-span-3">
+                            <Card className="col-span-7">
                                 <CardHeader>
-                                    <CardTitle>Recent Sales</CardTitle>
+                                    <CardTitle>Your tasks</CardTitle>
                                     <CardDescription>
-                                        You made 265 sales this month.
+                                        You made X tasks this month.
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <RecentSales />
-                                </CardContent>
-                            </Card>
-                            <Card className="col-span-7 lg:col-span-3">
-                                <CardHeader>
-                                    <CardTitle>Recent Sales</CardTitle>
-                                    <CardDescription>
-                                        You made 265 sales this month.
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <RecentSales />
+                                    <DataTable />
                                 </CardContent>
                             </Card>
                         </div>
                     </TabsContent>
                 </Tabs>
             </div>
+            <Toaster />
         </div>
     );
 }
