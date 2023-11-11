@@ -18,6 +18,7 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from "@radix-ui/react-alert-dialog";
+import { useStore } from "@/lib/store";
 
 const data: MoocContent[] = [
   {
@@ -40,12 +41,23 @@ const data: MoocContent[] = [
 ];
 
 const Quest = () => {
+  const store = useStore();
   const navigate = useNavigate();
   const { toast } = useToast();
 
   function handleLaunchExercise(id: number) {
     console.log("Handle Launch exercise for ", id);
     console.log("Hello World");
+    store.setQuestions([
+      {
+        question: "Hello World ?",
+        type: "mcq",
+        answer: "Bah oui",
+        options: ["Bah oui", "Bah non", "Mdr", "Youpi"],
+      },
+    ]);
+
+    navigate(`/learn`);
   }
 
   return (
