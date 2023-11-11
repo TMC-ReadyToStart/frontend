@@ -1,18 +1,18 @@
-import { UserNav } from "@/components/user-nav";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Toaster } from "@/components/ui/toaster";
 import Cards, { CardData } from "@/components/cards";
 import { CPlain, PythonPlain, JavaPlain } from "devicons-react";
+import { useNavigate } from "react-router";
 
 const data: CardData[] = [
   {
+    id: 1,
     image: CPlain,
     title: "C/C++",
     progress: 0,
@@ -20,6 +20,7 @@ const data: CardData[] = [
     is_done: false,
   },
   {
+    id: 2,
     image: PythonPlain,
     title: "Python",
     progress: 0.5,
@@ -27,6 +28,7 @@ const data: CardData[] = [
     is_done: false,
   },
   {
+    id: 3,
     image: JavaPlain,
     title: "Java",
     progress: 1,
@@ -45,14 +47,17 @@ const badges: string[] = [
 ];
 
 export default function Quests() {
+  let navigate = useNavigate();
+
+  function handleCardClick() {
+    console.log("Handle Card clicked");
+  }
+
   return (
     <div className="flex-1 p-8 pt-6 space-y-4 min-h-screen bg-slate-100">
       <div className="flex justify-between items-center space-y-2">
         <h2 className="text-3xl font-bold tracking-tight">Quests 🧙‍♂️</h2>
-        <div className="flex items-center space-x-2">
-          {/* <CalendarDateRangePicker /> */}
-          {/* <Button>Download</Button> */}
-        </div>
+        <div className="flex items-center space-x-2"></div>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
@@ -171,7 +176,7 @@ export default function Quests() {
             <CardDescription>Here you can find your quests.</CardDescription>
           </CardHeader>
           <CardContent className="w-full">
-            <Cards data={data} />
+            <Cards data={data} handleClick={handleCardClick} />
           </CardContent>
         </Card>
       </div>

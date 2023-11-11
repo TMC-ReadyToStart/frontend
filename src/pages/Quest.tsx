@@ -4,6 +4,20 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import ActivityTable from "@/components/quest-table";
 import { MoocContent } from "@/models/api/moocReponseApi";
+import React, { useRef } from "react";
+import {
+  AlertDialogHeader,
+  AlertDialogFooter,
+} from "@/components/ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@radix-ui/react-alert-dialog";
 
 const data: MoocContent[] = [
   {
@@ -27,25 +41,23 @@ const data: MoocContent[] = [
 
 const Quest = () => {
   const navigate = useNavigate();
-
   const { toast } = useToast();
 
+  function handleLaunchExercise(id: number) {
+    console.log("Handle Launch exercise for ", id);
+    console.log("Hello World");
+  }
+
   return (
-    <div className="w-full">
-      <Toaster />
-      <div className="flex flex-col w-full md:pt-[30px] gap-10">
-        <div className="flex flex-col justify-center space-y-8 w-full md:text-left">
-          <h1 className="text-3xl font-bold md:text-4xl">
-            Search a malware <span className="text-bordeaux">report</span>
-          </h1>
-        </div>
-        <ActivityTable
-          data={data}
-          handleScan={(id: number) => console.log("Handle Scan: ", id)}
-          handleReport={(id: number) => console.log("Handle Report: ", id)}
-          handleDelete={(id: number) => console.log("Handle Delete: ", id)}
-        />
+    <div className="flex-1 p-8 pt-6 space-y-4 min-h-screen bg-slate-100">
+      <div className="flex justify-between items-center space-y-2">
+        <h2 className="text-3xl font-bold tracking-tight">Python Quest 🤠</h2>
+        <div className="flex items-center space-x-2"></div>
       </div>
+
+      <ActivityTable data={data} handleLaunchExercise={handleLaunchExercise} />
+
+      <Toaster />
     </div>
   );
 };

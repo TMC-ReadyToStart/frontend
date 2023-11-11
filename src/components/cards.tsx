@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 export interface CardData {
+  id: number;
   image: any;
   title: string;
   progress: number;
@@ -12,9 +13,10 @@ export interface CardData {
 
 export interface CardsProps {
   data: CardData[];
+  handleClick: () => void;
 }
 
-const Cards: React.FC<CardsProps> = ({ data }) => {
+const Cards: React.FC<CardsProps> = ({ data, handleClick }) => {
   if (data.length === 0)
     return (
       <div className="flex justify-center items-center w-full h-96">
@@ -24,7 +26,7 @@ const Cards: React.FC<CardsProps> = ({ data }) => {
 
   return (
     <>
-      <div className="flex gap-4 lg:grid-cols-4">
+      <div className="flex gap-4 lg:grid-cols-4" onClick={handleClick}>
         {data.map((item, index) => {
           let ImageItem = item.image;
           return (

@@ -37,16 +37,12 @@ import { convertirFormatDate } from "@/lib/string_ope";
 
 interface ActivityTableProps {
   data: MoocContent[];
-  handleScan: (id: number) => void;
-  handleReport: (id: number) => void;
-  handleDelete: (id: number) => void;
+  handleLaunchExercise: (id: number) => void;
 }
 
 const ActivityTable: React.FC<ActivityTableProps> = ({
   data,
-  handleScan,
-  handleReport,
-  handleDelete,
+  handleLaunchExercise,
 }) => {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -58,7 +54,7 @@ const ActivityTable: React.FC<ActivityTableProps> = ({
 
   const columns: ColumnDef<MoocContent>[] = [
     {
-      accessorKey: "exo_id",
+      accessorKey: "id",
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -69,7 +65,9 @@ const ActivityTable: React.FC<ActivityTableProps> = ({
         </Button>
       ),
       cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("report_id")}</div>
+        <div className="flex justify-center items-center lowercase">
+          {row.getValue("id")}
+        </div>
       ),
     },
     {
@@ -78,7 +76,6 @@ const ActivityTable: React.FC<ActivityTableProps> = ({
         return <div className="text-center">Status</div>;
       },
       cell: ({ row }) => {
-        console.log("ROW: ", row);
         const percent: number = row.getValue("percent");
 
         let status: string = "In Progress";
@@ -168,16 +165,10 @@ const ActivityTable: React.FC<ActivityTableProps> = ({
               <DropdownMenuItem
                 onClick={() => navigator.clipboard.writeText(`${mooc.id}`)}
               >
-                Copy report ID
+                Copy exercice ID
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleScan(mooc.id)}>
-                Launch Scan
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleReport(mooc.id)}>
-                View report
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleDelete(mooc.id)}>
-                Delete report
+              <DropdownMenuItem onClick={() => handleLaunchExercise(mooc.id)}>
+                Launch Exercice
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -211,11 +202,14 @@ const ActivityTable: React.FC<ActivityTableProps> = ({
         <Input
           placeholder="Filter reports..."
           value={
-            (table.getColumn("filename")?.getFilterValue() as string) ?? ""
+            (table.getColumn("id")?.getFilterValue() as string) ??
+            (table.getColumn("title")?.getFilterValue() as string) ??
+            (table.getColumn("description")?.getFilterValue() as string) ??
+            ""
           }
-          onChange={(event) =>
-            table.getColumn("filename")?.setFilterValue(event.target.value)
-          }
+          onChange={(event) => {
+            table.getColumn("title")?.setFilterValue(event.target.value);
+          }}
           className="max-w-sm"
         />
         <DropdownMenu>
