@@ -13,6 +13,7 @@ import { Overview } from "@/components/overview";
 import { RecentSales } from "@/components/recent-sales";
 import { DataTable } from "@/components/data-table";
 import { Toaster } from "@/components/ui/toaster";
+import Cards from "@/components/cards";
 
 export default function Dashboard() {
     return (
@@ -178,6 +179,7 @@ export default function Dashboard() {
                         </CardContent>
                     </Card>
                 </div>
+                <Cards />
             </div>
             <Toaster />
         </div>
