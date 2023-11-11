@@ -44,6 +44,7 @@
     "cmdk": "^0.2.0",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.7",
+    "devicons-react": "^1.2.6",
     "lucide-react": "^0.263.0",
     "million": "^2.5.4",
     "numeral": "^2.0.6",
