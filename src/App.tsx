@@ -4,11 +4,12 @@ import Dashboard from "@/pages/Dashboard";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Quests from "./pages/Quests";
 import { UserNav } from "./components/user-nav";
+import Quest from "./pages/Quest";
 
 function UI() {
   return (
     <div className="flex flex-col">
-      <div className="w-full h-[56px] flex justify-between px-4 items-center">
+      <div className="w-full h-[56px] flex justify-between px-4 items-center border border-slate-200">
         <div>Logo</div>
 
         <div className="flex flex-1 justify-end">
@@ -26,6 +27,7 @@ function UI() {
         <Routes>
           <Route path="/quests" element={<Quests />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/quest" element={<Quest />} />
         </Routes>
       </div>
     </div>
