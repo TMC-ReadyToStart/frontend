@@ -119,6 +119,8 @@ function MCQ() {
 
 function Question() {
     const store = useStore();
+    const [answer, setAnswer] = useState("");
+
     const questions = store.questions;
     const idx = store.currentQuestion;
 
@@ -134,13 +136,16 @@ function Question() {
                 <Textarea
                     className="w-full min-h-[60px]"
                     placeholder="Write your answer here..."
+                    onChange={(e) => setAnswer(e.target.value)}
                 />
 
                 <div className="flex flex-row justify-end w-full pt-8">
                     <Button
                         onClick={() => {
                             store.setCurrentQuestion(store.currentQuestion + 1);
-                            store.setValidAnswers(store.validAnswers + 1);
+                            if (questions[idx].answer === answer) {
+                                store.setValidAnswers(store.validAnswers + 1);
+                            }
                         }}
                     >
                         Next
@@ -155,7 +160,8 @@ function FillInTheBlanksQuestion() {
     const store = useStore();
     const questions = store.questions;
     const idx = store.currentQuestion;
-    const [answers, setAnswers] = useState([""]);
+    const blanks = questions[idx].blanks || [];
+    const [answers, setAnswers] = useState<string[]>([]);
 
     const handleChange = (e, index) => {
         const newAnswers = [...answers];
@@ -179,15 +185,15 @@ function FillInTheBlanksQuestion() {
                     <Button
                         onClick={() => {
                             store.setCurrentQuestion(store.currentQuestion + 1);
-                            // let blanksCorrect = 0;
-                            // for (let i = 0; i < answers.length; i++) {
-                            //     if (answers[i] === blanks[i]) {
-                            //         blanksCorrect++;
-                            //     }
-                            // }
-                            // if (blanksCorrect === blanks.length) {
-                            //     store.setValidAnswers(store.validAnswers + 1);
-                            // }
+                            let blanksCorrect = 0;
+                            for (let i = 0; i < answers.length; i++) {
+                                if (answers[i] === blanks[i]) {
+                                    blanksCorrect++;
+                                }
+                            }
+                            if (blanksCorrect === blanks.length) {
+                                store.setValidAnswers(store.validAnswers + 1);
+                            }
                         }}
                     >
                         Next
