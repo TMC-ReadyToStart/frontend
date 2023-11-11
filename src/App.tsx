@@ -1,22 +1,14 @@
-import { Route, Routes } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Route, Routes, Navigate, Link } from "react-router-dom";
 
-import { LINKS } from "./store";
-import { Main, Upload } from "views";
-import { Footer, NavBar } from "components";
+// import { useQuery } from "@tanstack/react-query";
 
-function App() {
-  return (
-    <div className="flex relative flex-col min-h-screen bg-background">
-      <div className="flex flex-auto w-full h-full">
-        <NavBar />
-        <Routes>
-          <Route path={LINKS.home} element={<Main />} />
-          <Route path={LINKS.upload} element={<Upload />} />
-        </Routes>
-      </div>
-      <Footer />
-    </div>
-  );
+export default function App() {
+    return (
+        <div className="min-h-screen bg-gray-100">
+            <Routes>
+                <Route path="/" element={<Button>Click me</Button>} />
+            </Routes>
+        </div>
+    );
 }
-
-export default App;
