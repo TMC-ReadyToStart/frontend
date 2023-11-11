@@ -4,7 +4,7 @@ import { LINKS } from "./store";
 import Main from "./views/Main";
 import { Upload } from "./views/Upload";
 
-const App = () => {
+function App() {
   return (
     <div className="flex flex-col gap-[70px]">
       <NavBar />
@@ -15,6 +15,6 @@ const App = () => {
       <Footer />
     </div>
   );
-};
+}
 
 export default App;
