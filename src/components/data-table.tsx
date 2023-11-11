@@ -79,7 +79,7 @@ const columns: ColumnDef<Task>[] = [
         },
         cell: ({ row }) => (
             <Badge
-                className="bg-blue-500 cursor-pointer select-none hover:bg-blue-400"
+                className="ml-4 bg-blue-500 cursor-pointer select-none hover:bg-blue-400"
                 onClick={() => {
                     navigator.clipboard.writeText(row.getValue("task"));
                     toast({
@@ -107,7 +107,7 @@ const columns: ColumnDef<Task>[] = [
             );
         },
         cell: ({ row }) => (
-            <div className="lowercase truncate max-w-[200px] text-center">
+            <div className="lowercase truncate max-w-[200px] ml-4">
                 {row.getValue("description")}
             </div>
         ),
@@ -128,7 +128,7 @@ const columns: ColumnDef<Task>[] = [
             );
         },
         cell: ({ row }) => (
-            <div className="lowercase truncate max-w-[200px] text-center">
+            <div className="lowercase truncate max-w-[200px] ml-4">
                 {row.getValue("status")}
             </div>
         ),
@@ -149,7 +149,7 @@ const columns: ColumnDef<Task>[] = [
             );
         },
         cell: ({ row }) => (
-            <div className="lowercase truncate max-w-[200px] text-center">
+            <div className="lowercase truncate max-w-[200px] ml-4">
                 {row.getValue("priority")}
             </div>
         ),
@@ -199,7 +199,7 @@ export function DataTable() {
     });
 
     return (
-        <div className="">
+        <div className="w-full overflow-x-scroll">
             <div className="flex items-center py-2 space-x-2">
                 <Input
                     placeholder="Rechercher"
