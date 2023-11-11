@@ -13,7 +13,7 @@ export interface CardData {
 
 export interface CardsProps {
   data: CardData[];
-  handleClick: () => void;
+  handleClick: (id: number) => void;
 }
 
 const Cards: React.FC<CardsProps> = ({ data, handleClick }) => {
@@ -26,7 +26,7 @@ const Cards: React.FC<CardsProps> = ({ data, handleClick }) => {
 
   return (
     <>
-      <div className="flex gap-4 lg:grid-cols-4" onClick={handleClick}>
+      <div className="flex gap-4 lg:grid-cols-4">
         {data.map((item, index) => {
           let ImageItem = item.image;
           return (
@@ -35,9 +35,7 @@ const Cards: React.FC<CardsProps> = ({ data, handleClick }) => {
                 item.is_done ? "relative completed-card" : ""
               }`}
               key={index}
-              onClick={() => {
-                // store.setShowDeal(deal);
-              }}
+              onClick={() => handleClick(item.id)}
             >
               {item.is_done && (
                 <div className="absolute top-1/2 left-1/2 p-4 w-full h-full text-lg font-bold text-white bg-green-200 bg-opacity-80 rounded transform -translate-x-1/2 -translate-y-1/2">

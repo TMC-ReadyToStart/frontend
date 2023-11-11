@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Cards, { CardData } from "@/components/cards";
 import { CPlain, PythonPlain, JavaPlain } from "devicons-react";
 import { useNavigate } from "react-router";
+import { useStore } from "@/lib/store";
 
 const data: CardData[] = [
   {
@@ -47,10 +48,16 @@ const badges: string[] = [
 ];
 
 export default function Quests() {
+  let store = useStore();
   let navigate = useNavigate();
 
-  function handleCardClick() {
+  function handleCardClick(id: number) {
     console.log("Handle Card clicked");
+    const quest = data.filter((dt) => dt.id == id)[0];
+
+    store.setQuest(id);
+    store.setQuestTitle(quest.title);
+    navigate("/ui/quest");
   }
 
   return (

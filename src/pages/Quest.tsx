@@ -1,23 +1,9 @@
 // import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "@/components/ui/use-toast";
+// import { useToast } from "@/components/ui/use-toast";
 import ActivityTable from "@/components/quest-table";
 import { MoocContent } from "@/models/api/moocReponseApi";
-import React, { useRef } from "react";
-import {
-  AlertDialogHeader,
-  AlertDialogFooter,
-} from "@/components/ui/alert-dialog";
-import {
-  AlertDialog,
-  AlertDialogTrigger,
-  AlertDialogContent,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogCancel,
-  AlertDialogAction,
-} from "@radix-ui/react-alert-dialog";
 import { useStore } from "@/lib/store";
 
 const data: MoocContent[] = [
@@ -43,7 +29,7 @@ const data: MoocContent[] = [
 const Quest = () => {
   const store = useStore();
   const navigate = useNavigate();
-  const { toast } = useToast();
+  // const { toast } = useToast();
 
   function handleLaunchExercise(id: number) {
     console.log("Handle Launch exercise for ", id);
@@ -63,7 +49,9 @@ const Quest = () => {
   return (
     <div className="flex-1 p-8 pt-6 space-y-4 min-h-screen bg-slate-100">
       <div className="flex justify-between items-center space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight">Python Quest 🤠</h2>
+        <h2 className="text-3xl font-bold tracking-tight">
+          {store.questTitle} Quest 🤠
+        </h2>
         <div className="flex items-center space-x-2"></div>
       </div>
 
