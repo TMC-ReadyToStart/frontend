@@ -36,6 +36,7 @@ import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
+import { uploadFile } from "@/lib/store";
 
 export default function Dashboard() {
     return (
@@ -245,6 +246,7 @@ function UploadMooc({ open }: { open: boolean }) {
                                 placeholder="Inspire your people"
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
+                                disabled={automatic}
                             />
                         </div>
                         <div className="flex flex-col w-full space-y-1">
@@ -295,7 +297,30 @@ function UploadMooc({ open }: { open: boolean }) {
 
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction disabled={!file}>
+                    <AlertDialogAction
+                        disabled={!file || !title || !description || !level}
+                        onClick={async () => {
+                            if (!file) return;
+                            uploadFile(file)
+                                .then((res) => {
+                                    console.log(res);
+                                    toast.toast({
+                                        title: "MOOC uploaded",
+                                        description:
+                                            "Your MOOC has been uploaded successfully",
+                                    });
+                                })
+                                .catch((err) => {
+                                    console.error(err);
+                                    toast.toast({
+                                        title: "Error",
+                                        description:
+                                            "An error occured while uploading your MOOC",
+                                    });
+                                });
+                            setIsOpen(false);
+                        }}
+                    >
                         Upload
                     </AlertDialogAction>
                 </AlertDialogFooter>

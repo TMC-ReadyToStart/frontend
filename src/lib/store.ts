@@ -9,6 +9,14 @@ export const backend = axios.create({
   },
 });
 
+export const uploadFile = async (file: File) => {
+  return await backend.post("/upload", file, {
+    headers: {
+      "Content-Type": "application/zip",
+    },
+  });
+};
+
 interface Store {
   questions: Question[];
   setQuestions: (questions: Question[]) => void;
