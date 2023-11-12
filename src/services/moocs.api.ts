@@ -62,8 +62,9 @@ export function convertJsonToMoocContent(input): MoocContent[] {
   let results: MoocContent[] = [];
 
   input.forEach((data) => {
+    console.log("DATA CONVERT: ", data);
     results.push({
-      id: data["_id"],
+      id: data.id,
       title: data.title,
       description: data.description,
       percent: data.percent,

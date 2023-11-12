@@ -35,6 +35,12 @@ interface Store {
 
   openMooc: boolean;
   setOpenMooc: (openMooc: boolean) => void;
+
+  currentMooc: number;
+  setCurrentMooc: (id: number) => void;
+
+  currentExercice: number;
+  setCurrentExercice: (id: number) => void;
 }
 
 export const useStore = create<Store>()((set) => ({
@@ -54,4 +60,10 @@ export const useStore = create<Store>()((set) => ({
 
   openMooc: false,
   setOpenMooc: (openMooc) => set({ openMooc }),
+
+  currentMooc: -1,
+  setCurrentMooc: (currentMooc) => set({ currentMooc }),
+
+  currentExercice: -1,
+  setCurrentExercice: (currentExercice) => set({ currentExercice }),
 }));

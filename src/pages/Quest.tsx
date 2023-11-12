@@ -9,66 +9,70 @@ import { useNavigate } from "react-router";
 import { convertJsonToMoocContent } from "@/services/moocs.api";
 
 const Quest = () => {
-    const store = useStore();
-    const navigate = useNavigate();
+  const store = useStore();
+  const navigate = useNavigate();
 
-    const [data, setData] = useState<MoocContent[]>([]);
+  const [data, setData] = useState<MoocContent[]>([]);
 
-    useEffect(() => {
-        if (store.questTitle == "") navigate("/ui/quests");
-        // console.log("STORE QUESTITLE: ", store.questTitle);
-        backend
-            .get("/moocs/content/" + store.questid)
-            .then((response) => {
-                setData(convertJsonToMoocContent(response.data));
-            })
-            .catch((err) => console.log("ERROR AXIOS: ", err));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+  useEffect(() => {
+      if (store.questTitle == "") navigate("/ui/quests");
+      // console.log("STORE QUESTITLE: ", store.questTitle);
+      backend
+      .get("/moocs/content/" + store.questid)
+      .then((response) => {
+          setData(convertJsonToMoocContent(response.data));
+          })
+      .catch((err) => console.log("ERROR AXIOS: ", err));
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
 
-    function handleLaunchExercise(id: number) {
-        // console.log("Handle Launch exercise for ", id);
-        // console.log("Hello World");
+  function handleLaunchExercise(id: number) {
+    store.setValidAnswers(0);
+    console.log("Handle Launch exercise for ", id);
+    console.log("Hello World");
 
-        const questions: Question[] = data.filter((elt) => elt.id == id)[0]
-            .questions;
+    console.log("ID: ", id);
+    console.log("DATA TO FIND: ", data);
+    let questions: Question[] = data.filter((elt) => elt.id == id)[0].questions;
 
-        store.setQuestions(questions);
+    //store.setCurrentMooc(store.questid);
+    store.setCurrentExercice(id);
+    store.setQuestions(questions);
 
-        navigate(`/learn`);
-    }
+    navigate(`/learn`);
+  }
 
-    return (
-        <div className="flex-1 min-h-screen p-8 pt-6 space-y-4 bg-slate-100">
-            <div className="flex items-center justify-between space-y-2">
-                <Breadcrumb
-                    list={[
-                        {
-                            title: "Quests",
-                            link: "/ui/quests",
-                        },
-                        {
-                            title: store.questTitle + " 🤠",
-                            link: "/ui/quests",
-                        },
-                    ]}
-                />
-                <h2 className="text-3xl font-bold tracking-tight"></h2>
-                <div className="flex items-center space-x-2"></div>
-            </div>
+  return (
+      <div className="flex-1 min-h-screen p-8 pt-6 space-y-4 bg-slate-100">
+      <div className="flex items-center justify-between space-y-2">
+      <Breadcrumb
+      list={[
+      {
+title: "Quests",
+link: "/ui/quests",
+},
+{
+title: store.questTitle + " 🤠",
+link: "/ui/quests",
+},
+      ]}
+      />
+      <h2 className="text-3xl font-bold tracking-tight"></h2>
+      <div className="flex items-center space-x-2"></div>
+      </div>
 
-            <Card>
-                <CardContent className="pt-2 overflow-x-auto">
-                    <ActivityTable
-                        data={data}
-                        handleLaunchExercise={handleLaunchExercise}
-                    />
-                </CardContent>
-            </Card>
+      <Card>
+      <CardContent className="pt-2 overflow-x-auto">
+  <ActivityTable
+  data={data}
+  handleLaunchExercise={handleLaunchExercise}
+  />
+  </CardContent>
+  </Card>
 
-            <Toaster />
-        </div>
-    );
-};
+  <Toaster />
+  </div>
+  );
+  };
 
 export default Quest;
