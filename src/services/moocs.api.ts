@@ -1,4 +1,5 @@
 import { CardData } from "@/components/cards";
+import { MoocDataTable, MoocElement, MoocState } from "@/components/data-table";
 import { MoocContent, Question } from "@/models/api/moocReponseApi";
 
 import {
@@ -24,9 +25,7 @@ const LookUpTable = {
 };
 
 export function convertJsonToCardData(input): CardData[] {
-  console.log("INPUT: ", input);
   const data_json = input;
-  console.log("DATA JSON: ", data_json);
   let results: CardData[] = [];
 
   data_json.forEach((data) => {
@@ -39,7 +38,6 @@ export function convertJsonToCardData(input): CardData[] {
     });
   });
 
-  console.log("CONVERT JSON: ", results);
   return results;
 }
 
@@ -58,11 +56,25 @@ function convertToQuestion(input): Question[] {
   return result;
 }
 
+export function convertJsonToMoocElement(input): MoocElement[] {
+  let results: MoocElement[] = [];
+
+  input.forEach((data) => {
+    results.push({
+      id: data.id,
+      title: data.title,
+      description: data.description,
+      haveExercices: data.has_exercise ? MoocState.READY : MoocState.NOT_READY,
+    });
+  });
+
+  return results;
+}
+
 export function convertJsonToMoocContent(input): MoocContent[] {
   let results: MoocContent[] = [];
 
   input.forEach((data) => {
-    console.log("DATA CONVERT: ", data);
     results.push({
       id: data.id,
       title: data.title,
