@@ -27,7 +27,7 @@ export default function Result() {
           <Confetti width={2000} height={2000} />
           <div>
             <h2 className="text-3xl font-bold tracking-tight">
-              Your score is: {store.validAnswers}
+              Your score is: {store.validAnswers} / {store.questions.length}
             </h2>
           </div>
         </div>
@@ -36,9 +36,11 @@ export default function Result() {
   }
 
   return (
-    <div className="flex flex-1 justify-center items-center min-h-screen bg-red-300">
+    <div className="flex flex-1 justify-center items-center min-h-screen bg-pink-300">
       <div className="flex flex-col justify-between items-center space-y-4 w-1/2 shake">
-        <h2 className="text-3xl font-bold tracking-tight">You failed 😢</h2>
+        <h2 className="text-3xl font-bold tracking-tight">
+          Lets try again, I'm sure you can do better next time 😉
+        </h2>
         <div className="flex items-center space-x-2">
           <Link to="/">
             <Button>Go back to dashboard</Button>
@@ -46,7 +48,7 @@ export default function Result() {
         </div>
         <div>
           <h2 className="text-3xl font-bold tracking-tight">
-            Your score is: {store.validAnswers}
+            Your score is: {store.validAnswers} / {store.questions.length}
           </h2>
         </div>
       </div>

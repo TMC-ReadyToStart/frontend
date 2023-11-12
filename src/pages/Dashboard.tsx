@@ -159,9 +159,9 @@ export default function Dashboard() {
         </Card>
         <Card className="overflow-x-auto col-span-7">
           <CardHeader className="pb-0">
-            <CardTitle>Moocs</CardTitle>
+            <CardTitle>Quests</CardTitle>
             <div className="flex justify-between items-center space-x-2 w-full">
-              You made X tasks this month.
+              You made {data.length} tasks this month.
               <UploadMooc />
             </div>
           </CardHeader>
@@ -202,15 +202,15 @@ export function UploadMooc() {
           }}
           className="ml-4 bg-[#BB432C] hover:bg-[#BB432CCC]"
         >
-          Upload MOOC
+          Upload Quest
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Upload your MOOC</AlertDialogTitle>
+          <AlertDialogTitle>Upload your Quest</AlertDialogTitle>
           <AlertDialogDescription>
-            - Please upload your MOOC in ZIP format.
-            <br />- The ZIP file name must be the same as the MOOC
+            - Please upload your Quest in ZIP format.
+            <br />- The ZIP file name must be the same as the Quest
           </AlertDialogDescription>
         </AlertDialogHeader>
         <input
@@ -239,7 +239,7 @@ export function UploadMooc() {
         </label>
         {file && (
           <div className="flex flex-col space-y-4 w-full">
-            <h2>Configure your MOOC</h2>
+            <h2>Configure your Quest</h2>
             <div className="flex flex-col space-y-1 w-full">
               <label htmlFor="title">Title:</label>
               <input
