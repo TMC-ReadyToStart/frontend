@@ -67,7 +67,7 @@ export function Overview() {
                     fontSize={12}
                     tickLine={false}
                     axisLine={false}
-                    tickFormatter={(value) => `$${value}`}
+                    tickFormatter={(value) => `${value / 100}`}
                 />
                 <Bar dataKey="total" fill="#BB432C" radius={[4, 4, 0, 0]} />
             </BarChart>

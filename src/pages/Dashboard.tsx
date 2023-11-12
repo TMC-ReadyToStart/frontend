@@ -5,10 +5,37 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+
 import { Overview } from "@/components/overview";
 import { RecentSales } from "@/components/recent-sales";
 import { DataTable } from "@/components/data-table";
 import { Toaster } from "@/components/ui/toaster";
+import { useToast } from "@/components/ui/use-toast";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Trash } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function Dashboard() {
     return (
@@ -20,20 +47,11 @@ export default function Dashboard() {
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
                         <CardTitle className="text-sm font-medium">
-                            Total Revenue
+                            Number of Chads
                         </CardTitle>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            className="w-4 h-4 text-muted-foreground"
-                        >
-                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                        </svg>
+                        <span className="text-2xl font-bold text-muted-foreground">
+                            👾
+                        </span>
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">2</div>
@@ -132,9 +150,10 @@ export default function Dashboard() {
                 </Card>
                 <Card className="col-span-7 lg:col-span-3">
                     <CardHeader>
-                        <CardTitle>Recent Sales</CardTitle>
+                        <CardTitle>Recent Activity</CardTitle>
                         <CardDescription>
-                            You made 265 sales this month.
+                            <span className="font-bold">+20%</span> than last
+                            month
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -142,11 +161,12 @@ export default function Dashboard() {
                     </CardContent>
                 </Card>
                 <Card className="col-span-7 overflow-x-auto">
-                    <CardHeader>
-                        <CardTitle>Your tasks</CardTitle>
-                        <CardDescription>
+                    <CardHeader className="pb-0">
+                        <CardTitle>Moocs</CardTitle>
+                        <div className="flex items-center justify-between w-full space-x-2">
                             You made X tasks this month.
-                        </CardDescription>
+                            <UploadMooc open={false} />
+                        </div>
                     </CardHeader>
                     <CardContent className="w-full">
                         <DataTable />
@@ -155,5 +175,131 @@ export default function Dashboard() {
             </div>
             <Toaster />
         </div>
+    );
+}
+
+function UploadMooc({ open }: { open: boolean }) {
+    const [isOpen, setIsOpen] = useState(open);
+
+    const [file, setFile] = useState<File | null>(null);
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [automatic, setAutomatic] = useState(false);
+    const [level, setLevel] = useState(0);
+
+    const toast = useToast();
+
+    return (
+        <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+            <AlertDialogTrigger asChild>
+                <Button
+                    onClick={() => {
+                        setIsOpen(true);
+                    }}
+                    className="ml-4"
+                >
+                    Upload MOOC
+                </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>Upload your MOOC</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        - Please upload your MOOC in ZIP format.
+                        <br />- The ZIP file name must be the same as the MOOC
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
+                <input
+                    id="file"
+                    type="file"
+                    accept=".zip"
+                    onChange={(e) => {
+                        setFile(e.target.files?.[0] ?? null);
+                    }}
+                    className="hidden"
+                />
+                <label
+                    htmlFor="file"
+                    className="flex items-center justify-center w-full p-4 space-x-2 bg-gray-100 border rounded-md cursor-pointer"
+                >
+                    {file ? file.name : "Choose a file"}
+                    {file && (
+                        <Trash
+                            className="w-5 h-5 ml-3 text-red-500"
+                            onClick={(e) => {
+                                setFile(null);
+                                e.stopPropagation();
+                            }}
+                        />
+                    )}
+                </label>
+                {file && (
+                    <div className="flex flex-col w-full space-y-4">
+                        <h2>Configure your MOOC</h2>
+                        <div className="flex flex-col w-full space-y-1">
+                            <label htmlFor="title">Title:</label>
+                            <input
+                                id="title"
+                                type="text"
+                                className="w-full px-2 py-1 border rounded-md"
+                                placeholder="Inspire your people"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                            />
+                        </div>
+                        <div className="flex flex-col w-full space-y-1">
+                            <label htmlFor="title">Description:</label>
+                            <Textarea
+                                id="description"
+                                className="w-full px-2 py-1 border rounded-md"
+                                placeholder="Inspire your people"
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                disabled={automatic}
+                            />
+                            <div className="flex items-center pt-1 space-x-2">
+                                <Checkbox
+                                    id="automatic"
+                                    checked={automatic}
+                                    onCheckedChange={(checked) => {
+                                        checked
+                                            ? setAutomatic(true)
+                                            : setAutomatic(false);
+                                    }}
+                                />
+                                <label htmlFor="automatic" className="text-sm">
+                                    Enable automatic description
+                                </label>
+                            </div>
+                        </div>
+                        <div className="flex flex-col w-full space-y-1">
+                            <Select
+                                onValueChange={(value) => {
+                                    setLevel(parseInt(value));
+                                }}
+                            >
+                                <SelectTrigger className="w-[180px]">
+                                    <SelectValue placeholder="Level" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="0">Beginner</SelectItem>
+                                    <SelectItem value="1">
+                                        Intermediate
+                                    </SelectItem>
+                                    <SelectItem value="2">Advanced</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+                )}
+
+                <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction disabled={!file}>
+                        Upload
+                    </AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
     );
 }
