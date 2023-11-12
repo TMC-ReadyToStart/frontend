@@ -5,9 +5,8 @@ export default function Secured({ children }) {
     const auth = useAuth();
     const location = useLocation();
 
-    if (!auth) {
-        if (location.pathname === "/") return null;
-
+    if (!auth.auth) {
+        // if (location.pathname === "/") return null;
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 

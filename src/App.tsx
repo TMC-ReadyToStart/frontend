@@ -10,6 +10,19 @@ import Result from "@/pages/Result";
 import { useStore } from "@/lib/store";
 import { useEffect } from "react";
 
+import {
+    Command,
+    CommandDialog,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+    CommandSeparator,
+    CommandShortcut,
+} from "@/components/ui/command";
+import CommandDialogSH from "@/components/command";
+
 function UI() {
     const store = useStore();
 
@@ -27,8 +40,8 @@ function UI() {
 
     return (
         <div className="flex flex-col">
-            <div className="w-full h-[56px] flex justify-between px-4 items-center border border-slate-200 border-t-0">
-                <div>Logo</div>
+            <div className="w-full h-[56px] flex justify-between px-4 items-center border border-slate-200 border-t-0 bg-white">
+                <img src="/logo.png" alt="logo" className="w-12 h-12" />
 
                 <div className="flex justify-end flex-1">
                     <div className="flex items-center justify-center p-2 text-center border-4 border-gray-100 rounded-full aspect-square bg-slate-200">
@@ -48,6 +61,7 @@ function UI() {
                     <Route path="/quest" element={<Quest />} />
                 </Routes>
             </div>
+            <CommandDialogSH />
         </div>
     );
 }
@@ -56,8 +70,6 @@ export default function App() {
     return (
         <div className="min-h-screen bg-gray-100">
             <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
                 <Route path="/ui/*" element={<UI />} />
                 <Route path="/learn" element={<Exam />} />
                 <Route path="/result" element={<Result />} />

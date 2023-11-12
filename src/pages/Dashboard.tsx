@@ -36,11 +36,11 @@ import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { uploadFile } from "@/lib/store";
+import { uploadFile, useStore } from "@/lib/store";
 
 export default function Dashboard() {
     return (
-        <div className="flex-1 min-h-screen p-8 pt-6 space-y-4 bg-slate-100">
+        <div className="flex-1 min-h-screen p-8 pt-6 space-y-4">
             <div className="flex items-center justify-between space-y-2">
                 <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
             </div>
@@ -50,91 +50,53 @@ export default function Dashboard() {
                         <CardTitle className="text-sm font-medium">
                             Number of Chads
                         </CardTitle>
-                        <span className="text-2xl font-bold text-muted-foreground">
-                            👾
-                        </span>
+                        <span className="text-2xl font-bold">👾</span>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">2</div>
-                        <p className="text-xs text-muted-foreground">
-                            +20.1% from last month
+                        <div className="text-2xl font-bold">42</div>
+                        <p className="text-xs text-muted-foreground text-[#BB432C]">
+                            +17 since last year
                         </p>
                     </CardContent>
                 </Card>
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
                         <CardTitle className="text-sm font-medium">
-                            Subscriptions
+                            Number of Moocs
                         </CardTitle>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            className="w-4 h-4 text-muted-foreground"
-                        >
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                            <circle cx="9" cy="7" r="4" />
-                            <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-                        </svg>
+                        <span className="text-2xl font-bold">📚</span>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">+2350</div>
-                        <p className="text-xs text-muted-foreground">
-                            +180.1% from last month
+                        <div className="text-2xl font-bold">12</div>
+                        <p className="text-xs text-muted-foreground text-[#BB432C]">
+                            +3 since last month
                         </p>
                     </CardContent>
                 </Card>
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
                         <CardTitle className="text-sm font-medium">
-                            Sales
+                            R2 score
                         </CardTitle>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            className="w-4 h-4 text-muted-foreground"
-                        >
-                            <rect width="20" height="14" x="2" y="5" rx="2" />
-                            <path d="M2 10h20" />
-                        </svg>
+                        <span className="text-2xl font-bold">😎</span>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">+12,234</div>
-                        <p className="text-xs text-muted-foreground">
-                            +19% from last month
+                        <div className="text-2xl font-bold">44k</div>
+                        <p className="text-xs text-muted-foreground text-[#BB432C]">
+                            +19% since last month
                         </p>
                     </CardContent>
                 </Card>
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
                         <CardTitle className="text-sm font-medium">
-                            Active Now
+                            Overall Productivity
                         </CardTitle>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            className="w-4 h-4 text-muted-foreground"
-                        >
-                            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-                        </svg>
+                        <span className="text-2xl font-bold">📊</span>
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">+573</div>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-xs text-muted-foreground text-[#BB432C]">
                             +201 since last hour
                         </p>
                     </CardContent>
@@ -152,8 +114,8 @@ export default function Dashboard() {
                 <Card className="col-span-7 lg:col-span-3">
                     <CardHeader>
                         <CardTitle>Recent Activity</CardTitle>
-                        <CardDescription>
-                            <span className="font-bold">+20%</span> than last
+                        <CardDescription className="text-[#BB432C]">
+                            <span className="font-bold ">+20%</span> than last
                             month
                         </CardDescription>
                     </CardHeader>
@@ -166,7 +128,7 @@ export default function Dashboard() {
                         <CardTitle>Moocs</CardTitle>
                         <div className="flex items-center justify-between w-full space-x-2">
                             You made X tasks this month.
-                            <UploadMooc open={false} />
+                            <UploadMooc />
                         </div>
                     </CardHeader>
                     <CardContent className="w-full">
@@ -179,14 +141,16 @@ export default function Dashboard() {
     );
 }
 
-function UploadMooc({ open }: { open: boolean }) {
-    const [isOpen, setIsOpen] = useState(open);
+export function UploadMooc() {
+    const store = useStore();
+    const isOpen = store.openMooc;
+    const setIsOpen = store.setOpenMooc;
 
     const [file, setFile] = useState<File | null>(null);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [automatic, setAutomatic] = useState(false);
-    const [level, setLevel] = useState(0);
+    const [, setLevel] = useState(0);
 
     const toast = useToast();
 
@@ -197,7 +161,7 @@ function UploadMooc({ open }: { open: boolean }) {
                     onClick={() => {
                         setIsOpen(true);
                     }}
-                    className="ml-4"
+                    className="ml-4 bg-[#BB432C] hover:bg-[#BB432CCC]"
                 >
                     Upload MOOC
                 </Button>
@@ -226,7 +190,7 @@ function UploadMooc({ open }: { open: boolean }) {
                     {file ? file.name : "Choose a file"}
                     {file && (
                         <Trash
-                            className="w-5 h-5 ml-3 text-red-500"
+                            className="w-5 h-5 ml-3 text-[#BB432C]"
                             onClick={(e) => {
                                 setFile(null);
                                 e.stopPropagation();
@@ -298,7 +262,8 @@ function UploadMooc({ open }: { open: boolean }) {
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                     <AlertDialogAction
-                        disabled={!file || !title || !description || !level}
+                        className="bg-[#BB432C] hover:bg-[#BB432CCC]"
+                        disabled={!file}
                         onClick={async () => {
                             if (!file) return;
                             uploadFile(file)

@@ -5,7 +5,7 @@ export default function Portal({ children }) {
     const auth = useAuth();
     const location = useLocation();
 
-    if (auth) {
+    if (auth.auth) {
         return <Navigate to="/" state={{ from: location }} />;
     }
 

@@ -69,7 +69,7 @@ function MCQ() {
     return (
         <Card className="w-1/2">
             <CardHeader>
-                <CardTitle>Question 1</CardTitle>
+                <CardTitle>Question {idx + 1}</CardTitle>
                 <CardDescription className="pt-2 text-xl">
                     {store.questions[store.currentQuestion].question}
                 </CardDescription>
@@ -77,8 +77,9 @@ function MCQ() {
 
             <CardContent className="space-y-2">
                 {questions[idx].options?.map((option, i) => (
-                    <div className="flex space-x-2" key={i}>
+                    <div className="flex items-center space-x-2" key={i}>
                         <Checkbox
+                            id={`checkbox-${i}`}
                             onCheckedChange={(checked) => {
                                 const newAnswers = [...answers];
                                 if (checked) {
@@ -94,7 +95,10 @@ function MCQ() {
                                 console.log(questions[idx].answer?.split(","));
                             }}
                         />
-                        <label htmlFor={`checkbox-${i}`} className="text-sm">
+                        <label
+                            htmlFor={`checkbox-${i}`}
+                            className="text-sm select-none"
+                        >
                             {option}
                         </label>
                     </div>

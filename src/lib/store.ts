@@ -32,6 +32,9 @@ interface Store {
 
   questTitle: string;
   setQuestTitle: (title: string) => void;
+
+  openMooc: boolean;
+  setOpenMooc: (openMooc: boolean) => void;
 }
 
 export const useStore = create<Store>()((set) => ({
@@ -48,4 +51,7 @@ export const useStore = create<Store>()((set) => ({
 
   questTitle: "",
   setQuestTitle: (questTitle) => set({ questTitle }),
+
+  openMooc: false,
+  setOpenMooc: (openMooc) => set({ openMooc }),
 }));
