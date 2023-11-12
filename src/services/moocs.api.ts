@@ -64,7 +64,7 @@ export function convertJsonToMoocElement(input): MoocElement[] {
       id: data.id,
       title: data.title,
       description: data.description,
-      haveExercices: data.has_exercise ? MoocState.READY : MoocState.NOT_READY,
+      haveExercices: data.has_exercise,
     });
   });
 

@@ -26,11 +26,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { MoocDataTable, MoocElement, MoocState } from "@/components/data-table";
+import { MoocDataTable, MoocElement } from "@/components/data-table";
 import { Overview } from "@/components/overview";
 import { RecentSales } from "@/components/recent-sales";
 import { Toaster } from "@/components/ui/toaster";
-import { toast, useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
@@ -59,6 +59,7 @@ export default function Dashboard() {
 
   function handleRemoveMooc(id: number) {
     console.log("Handle Remove Mooc");
+    backend.delete(`/moocs/${id}`).then((_) => upload_data());
     // upload_data();
   }
 
@@ -72,7 +73,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     upload_data();
-    setInterval(upload_data, 5000);
+    // setInterval(upload_data, 5000);
   }, []);
 
   return (
@@ -165,7 +166,11 @@ export default function Dashboard() {
             </div>
           </CardHeader>
           <CardContent className="w-full">
-            <DataTable />
+            <MoocDataTable
+              data={data}
+              handleLaunchExerciceGeneration={handleLaunchExerciceGeneration}
+              handleRemoveMooc={handleRemoveMooc}
+            />
           </CardContent>
         </Card>
       </div>

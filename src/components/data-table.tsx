@@ -91,7 +91,7 @@ const MoocDataTable: React.FC<ActivityTableProps> = ({
       },
       cell: ({ row }) => {
         const hasExercices = row.getValue("haveExercices");
-
+        console.log("HAS EXERC: ", hasExercices);
         let status: string = "Unready";
         let color: string = "bg-gray-400";
 
@@ -107,8 +107,9 @@ const MoocDataTable: React.FC<ActivityTableProps> = ({
 
         if (hasExercices == MoocState.PARTIALLY) {
           status = "Processing";
-          color = "bg-yellow-200";
+          color = "bg-blue-300";
         }
+
         return (
           <div className="flex justify-center items-center text-center">
             <Badge className={color}>{status}</Badge>
