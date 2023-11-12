@@ -3,17 +3,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 export interface CardData {
-    id: number;
-    image: any;
-    title: string;
-    progress: number;
-    description: string;
-    is_done?: boolean;
+  id: number;
+  image: any;
+  title: string;
+  progress: number;
+  description: string;
+  is_done?: boolean;
 }
 
 export interface CardsProps {
-    data: CardData[];
-    handleClick: (id: number) => void;
+  data: CardData[];
+  handleClick: (id: number) => void;
 }
 
 const Cards: React.FC<CardsProps> = ({ data, handleClick }) => {
@@ -49,7 +49,6 @@ const Cards: React.FC<CardsProps> = ({ data, handleClick }) => {
                                     </span>
                                 </div>
                             )}
-
                             <CardContent className="flex items-center justify-center p-4">
                                 <ImageItem size="100" color="#7d7d7d" />
                             </CardContent>
