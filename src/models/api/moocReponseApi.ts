@@ -9,6 +9,17 @@ export type MoocResponse = {
   moocs: Mooc[];
 };
 
+export type QuestionType = "mcq" | "question" | "fill-in-the-blanks";
+
+export type Question = {
+  question: string;
+  type: string;
+  answer: string;
+  options: string[];
+  text?: string;
+  blanks?: string[];
+};
+
 export type MoocContent = {
   id: number;
   title: string;
@@ -16,6 +27,7 @@ export type MoocContent = {
   percent: number;
   date: string;
   is_exercise: boolean;
+  questions: Question[];
 };
 
 export type MoocContentResponse = {

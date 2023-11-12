@@ -1,51 +1,37 @@
 import { Toaster } from "@/components/ui/toaster";
 import ActivityTable from "@/components/quest-table";
-import { MoocContent } from "@/models/api/moocReponseApi";
-import { useStore } from "@/lib/store";
+import { MoocContent, Question } from "@/models/api/moocReponseApi";
+import { backend, useStore } from "@/lib/store";
 import { Card, CardContent } from "@/components/ui/card";
 import { Breadcrumb } from "@/components/breadcrumbs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-
-const data: MoocContent[] = [
-  {
-    id: 1,
-    title: "Bubble Sort",
-    description: "Quick questions on the most used function for sorting",
-    percent: 100,
-    date: "Sat Nov 11 2023 20:09:20 GMT+0100 (Central European Standard Time)",
-    is_exercise: true,
-  },
-
-  {
-    id: 2,
-    title: "Quick Sort",
-    percent: 75,
-    date: "Sat Nov 11 2023 20:09:20 GMT+0100 (Central European Standard Time)",
-    is_exercise: true,
-    description: "No one likes it, but it's damn fast",
-  },
-];
+import { convertJsonToMoocContent } from "@/services/moocs.api";
 
 const Quest = () => {
   const store = useStore();
   const navigate = useNavigate();
 
+  const [data, setData] = useState<MoocContent[]>([]);
+
   useEffect(() => {
     if (store.questTitle == "") navigate("/ui/quests");
-  });
+    console.log("STORE QUESTITLE: ", store.questTitle);
+    backend
+      .get("/moocs/content/" + store.questid)
+      .then((response) => {
+        setData(convertJsonToMoocContent(response.data));
+      })
+      .catch((err) => console.log("ERROR AXIOS: ", err));
+  }, []);
 
   function handleLaunchExercise(id: number) {
     console.log("Handle Launch exercise for ", id);
     console.log("Hello World");
-    store.setQuestions([
-      {
-        question: "Hello World ?",
-        type: "mcq",
-        answer: "Bah oui",
-        options: ["Bah oui", "Bah non", "Mdr", "Youpi"],
-      },
-    ]);
+
+    let questions: Question[] = data.filter((elt) => elt.id == id)[0].questions;
+
+    store.setQuestions(questions);
 
     navigate(`/learn`);
   }

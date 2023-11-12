@@ -1,4 +1,5 @@
 import { CardData } from "@/components/cards";
+import { MoocContent, Question } from "@/models/api/moocReponseApi";
 
 import {
   CPlain,
@@ -39,5 +40,38 @@ export function convertJsonToCardData(input): CardData[] {
   });
 
   console.log("CONVERT JSON: ", results);
+  return results;
+}
+
+function convertToQuestion(input): Question[] {
+  let result: Question[] = [];
+
+  input.forEach((elt) => {
+    result.push({
+      question: elt.question,
+      answer: elt.answer,
+      options: elt.mcq,
+      type: "mcq",
+    });
+  });
+
+  return result;
+}
+
+export function convertJsonToMoocContent(input): MoocContent[] {
+  let results: MoocContent[] = [];
+
+  input.forEach((data) => {
+    results.push({
+      id: data["_id"],
+      title: data.title,
+      description: data.description,
+      percent: data.percent,
+      is_exercise: true,
+      date: data.date,
+      questions: convertToQuestion(data["questions"]),
+    });
+  });
+
   return results;
 }

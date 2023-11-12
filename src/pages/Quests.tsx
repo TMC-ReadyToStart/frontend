@@ -11,6 +11,7 @@ import { useNavigate } from "react-router";
 import { backend, useStore } from "@/lib/store";
 import { useEffect, useState } from "react";
 import { convertJsonToCardData } from "@/services/moocs.api";
+import { Breadcrumb } from "@/components/breadcrumbs";
 
 const badges: string[] = [
   "https://assets.tryhackme.com/img/badges/king.svg",
@@ -24,10 +25,15 @@ export default function Quests() {
   const [data, setData] = useState<CardData[]>([]);
 
   useEffect(() => {
-    backend.get("/moocs/all").then((response) => {
-      setData(convertJsonToCardData(response.data));
-    });
-  });
+    console.log("Launching use effect");
+    backend
+      .get("/moocs/all")
+      .then((response) => {
+        console.log("Axios output");
+        setData(convertJsonToCardData(response.data));
+      })
+      .catch((err) => console.log("ERROR AXIOS :", err));
+  }, []);
 
   const store = useStore();
   const navigate = useNavigate();
@@ -44,7 +50,15 @@ export default function Quests() {
   return (
     <div className="flex-1 p-8 pt-6 space-y-4 min-h-screen bg-slate-100">
       <div className="flex justify-between items-center space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight">Quests 🧙‍♂️</h2>
+        <Breadcrumb
+          list={[
+            {
+              title: "Quests 🧙‍♂️",
+              link: "/ui/quests",
+            },
+          ]}
+        />
+
         <div className="flex items-center space-x-2"></div>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -85,9 +99,13 @@ export default function Quests() {
           </CardHeader>
           <CardContent>
             <div className="flex flex-row -space-x-4">
-              {badges.map((badge) => {
+              {badges.map((badge, idx) => {
                 return (
-                  <img src={badge} className="w-10 rounded-md aspect-square" />
+                  <img
+                    src={badge}
+                    className="w-10 rounded-md aspect-square"
+                    key={idx}
+                  />
                 );
               })}
             </div>

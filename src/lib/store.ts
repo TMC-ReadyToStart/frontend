@@ -1,16 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
-
-type QuestionType = "mcq" | "question" | "fill-in-the-blanks";
-
-type Question = {
-  type: QuestionType;
-  question?: string;
-  options?: string[];
-  answer?: string;
-  text?: string;
-  blanks?: string[];
-};
+import { Question } from "@/models/api/moocReponseApi";
 
 export const backend = axios.create({
   baseURL: "https://1c65-163-5-23-68.ngrok-free.app/",
@@ -37,24 +27,7 @@ interface Store {
 }
 
 export const useStore = create<Store>()((set) => ({
-  questions: [
-    {
-      type: "mcq",
-      question: "What is the capital of India?",
-      options: ["New Delhi", "Mumbai", "Kolkata", "Chennai"],
-      answer: "New Delhi",
-    },
-    {
-      type: "question",
-      question: "What is the capital of India?",
-      answer: "New Delhi",
-    },
-    {
-      type: "fill-in-the-blanks",
-      text: "The capital of India is ___",
-      blanks: ["New Delhi"],
-    },
-  ],
+  questions: [],
   setQuestions: (questions) => set({ questions }),
 
   validAnswers: 0,
